@@ -6,14 +6,15 @@
 
   let { ticket }: { ticket: number } = $props();
 
-  // The desk read the oneDayMove reports as a one-day shift, not a month flip: a third problem.
+  // The desk's own view: counted where they're filed (379 under parser), the oneDayMove reports are
+  // footnoted and also listed as their own problem.
   const merged = $derived(uniqueById(reports as Report[]).filter((r) => r.mergedInto === ticket));
-  const problemOf = (r: Report) =>
-    notes.oneDayMove.includes(r.id) ? 'one-day' : (causeOf(r, tenantOf(r)) ?? 'unplaced');
+  const problemOf = (r: Report, p: string) =>
+    p === 'one-day' ? notes.oneDayMove.includes(r.id) : (causeOf(r, tenantOf(r)) ?? 'unplaced') === p;
   const rows = $derived(
     ['parser', 'hint', 'one-day', 'unplaced']
       .map((p) => {
-        const rs = merged.filter((r) => problemOf(r) === p);
+        const rs = merged.filter((r) => problemOf(r, p));
         const days = rs.map((r) => r.receivedAt.slice(0, 10)).sort();
         return { p, n: rs.length, tenants: new Set(rs.map((r) => r.tenant)).size, first: days[0], last: days.at(-1) };
       })
@@ -21,7 +22,7 @@
   );
 </script>
 
-<p><strong>{merged.length}</strong> reports in #{ticket} · <strong>{rows.length}</strong> problems</p>
+<p><strong>{merged.length}</strong> reports in #{ticket} · <strong>{rows.length}</strong> problems (the one-day reports are also counted under parser)</p>
 
 <table>
   <thead><tr><th>problem</th><th>reports</th><th>tenants</th><th>seen</th></tr></thead>

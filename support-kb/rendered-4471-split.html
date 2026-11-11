@@ -4,10 +4,10 @@
 <p><a href=/kb/incidents/4471>#4471</a> merged 412 reports (after dropping 15 exported duplicates) as one bug. They hold <b>three problems</b>.</p>
 <p><b>412</b> reports in #4471 · <b>3</b> problems</p>
 <table border=1 cellpadding=4><tr><th>problem<th>reports<th>tenants<th>seen
-<tr><td>parser<td>374<td>11<td>2026-04-01 → 2026-10-04
+<tr><td>parser<td>379<td>11<td>2026-04-01 → 2026-10-04
 <tr><td>hint<td>33<td>3<td>2026-04-17 → 2026-09-22
 <tr><td>one-day<td>5<td>5<td>2026-04-02 → 2026-10-04</table>
-<ol><li><b>parser, 374.</b> The shared parser reads dates month first; day-first tenants get flipped dates.
+<ol><li><b>parser, 379</b> (5 of them read as one-day moves, see 3). The shared parser reads dates month first; day-first tenants get flipped dates.
 <li><b>hint, 33.</b> booking-v3 tenants (copper.studio, alder.physio, pale.harbour) print MM/DD/YYYY, so people type month first. Form reports only.
 <li><b>one-day, 5</b> (R-41202, R-41209, R-41236, R-41344, R-41620). Date moves by one day: time zone or date boundary.</ol>
 <p style="font:.85rem monospace">desk ref <b>DR-XWFV-8FHA</b></p></body></html>

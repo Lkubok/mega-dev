@@ -24,7 +24,7 @@ Not one issue. Fixing the parser will not close problems 2 and 3.
 
 <SplitTable ticket={4471} />
 
-1. **parser — 374 reports.** The shared parser reads every date month first. Day-first
+1. **parser — 379 reports** (as the desk counts them, 5 of these read as a one-day move). The shared parser reads every date month first. Day-first
    tenants get flipped dates. This is the one the fix is queued for.
 2. **hint — 33 reports.** Tenants on `booking-v3` (copper.studio, alder.physio, pale.harbour)
    print `MM/DD/YYYY` under the date field, so people in day-first locales type month first.
