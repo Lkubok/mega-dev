@@ -1,0 +1,42 @@
+---
+layout: runbook
+title: '#4471 split: three problems, not one'
+owner: support desk
+status: proposed
+reviewed: 2026-11-11
+signature: v1.eyJzdWIiOiI2OTgiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdCI6MTc5NDQwNjY0MiwiZXhwIjoxNzk0NDkzMDQyfQ.m_kA6QIVQH3fy8oD1Zv3wMiDpyKxlaro2uRNJUkJm8U
+---
+
+<script>
+  import SplitTable from '#lib/kb/SplitTable.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+</script>
+
+[#4471](/kb/incidents/4471) merged 412 reports (after dropping 15 exported duplicates) as one
+bug. They hold **three problems**. Only the first is the parser bug the ticket describes.
+
+<Callout>
+Not one issue. Fixing the parser will not close problems 2 and 3.
+</Callout>
+
+## The split
+
+<SplitTable ticket={4471} />
+
+1. **parser — 374 reports.** The shared parser reads every date month first. Day-first
+   tenants get flipped dates. This is the one the fix is queued for.
+2. **hint — 33 reports.** Tenants on `booking-v3` (copper.studio, alder.physio, pale.harbour)
+   print `MM/DD/YYYY` under the date field, so people in day-first locales type month first.
+   Only form reports. Fix the form hint, not the parser.
+3. **one-day — 5 reports** (R-41202, R-41209, R-41236, R-41344, R-41620). The date moves by
+   one day, not a month flip: a time zone or date-boundary problem (for example one meeting
+   showing Tuesday in Lisbon and Monday in Toronto). Needs its own investigation.
+
+## Why the old table was wrong
+
+- Intake tags are a guess from the browser. Intake tagged 371 as `parser` and 41 as `hint`;
+  the cause comes from the tenant's locale, its booking form and the channel.
+- `CauseTable` files the 5 one-day reports under `parser` because it only knows two causes.
+
+<RenderStamp {signature} />
